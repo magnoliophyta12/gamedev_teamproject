@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: be71e275c56e99f46991167e04ac08ce
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 13400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 308305
+  packageName: Low Poly Wooden Crate
+  packageVersion: 1.0
+  assetPath: Assets/Game Assets/Aegis77/Low Poly Wooden Crate/Materials/Wooden Crate.physicMaterial
+  uploadId: 724913
