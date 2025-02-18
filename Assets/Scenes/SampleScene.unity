@@ -119,11 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &61529674 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5081073894348774033, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
-  m_PrefabInstance: {fileID: 493935212}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &493935212
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -186,7 +181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1782702501690864755, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: m_Name
-      value: Character
+      value: HumanMale_Character_FREE
       objectReference: {fileID: 0}
     - target: {fileID: 2144352035737229188, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: m_LocalPosition.z
@@ -247,7 +242,7 @@ PrefabInstance:
     - target: {fileID: 4540229000190281644, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: m_Avatar
       value: 
-      objectReference: {fileID: 9000000, guid: 081930da5e255e348940373200bbeaca, type: 3}
+      objectReference: {fileID: 9000000, guid: c346a9e2503cda64ba4698db6aa5e707, type: 3}
     - target: {fileID: 4540229000190281644, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: m_Controller
       value: 
@@ -584,7 +579,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e62a755475badf4b8d6cb8b8cd04079, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraAnchor: {fileID: 61529674}
+  cameraAnchor: {fileID: 1909547725}
+--- !u!4 &1909547725 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5081073894348774033, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
+  m_PrefabInstance: {fileID: 493935212}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2084943883
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -62,15 +62,15 @@ public class CharacterScript : MonoBehaviour
         if (jumpAction.ReadValue<float>() > 0 && groundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
+            animationState = AnimationStates.Jump;
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         characterController.Move(playerVelocity * Time.deltaTime);
-        animationState = AnimationStates.Jump;
 
         if (animationState != prevMoveState)
         {
-            animator.SetInteger("MoveState", (int)animationState);
+            animator.SetInteger("AnimationState", (int)animationState);
             prevMoveState = animationState;
         }
     }
