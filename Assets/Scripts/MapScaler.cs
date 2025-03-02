@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class MapScaler : MonoBehaviour
 {
     public RectTransform mapRect; // Ссылка на UI-объект карты
-    public float sizeRatio = 0.9f;  // Процент экрана (например, 30%)
+    public float sizeRatio = 0.3f;  // Процент экрана (например, 30%)
 
     void Start()
     {
