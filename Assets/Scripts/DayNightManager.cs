@@ -18,9 +18,12 @@ public class DayNightManager : MonoBehaviour
     public Light Sun;  // Солнце
     public Light Moon; // Луна
 
-    public AudioSource audioSource;
+    public AudioSource audioSourceMusic;
+    public AudioSource audioSourceAmbient;
     public AudioClip DayMusic;
     public AudioClip NightMusic;
+    public AudioClip DayAmbient;
+    public AudioClip NightAmbient;
 
     private float sunIntensity;
     private float moonIntensity;
@@ -34,6 +37,7 @@ public class DayNightManager : MonoBehaviour
 
         // Устанавливаем начальную музыку (дневную)
         PlayMusic(DayMusic, true);
+        PlayAmbient(DayAmbient, true);
     }
 
     private void Update()
@@ -89,11 +93,13 @@ public class DayNightManager : MonoBehaviour
         if (TimeOfDay > dayEnd && isDay) // Ночь началась
         {
             isDay = false;
+            PlayAmbient(NightAmbient, true);
             PlayMusic(NightMusic, true); // Запускаем ночную музыку с зацикливанием
         }
         else if (TimeOfDay <= dayEnd && !isDay) // День начался
         {
             isDay = true;
+            PlayAmbient(DayAmbient, true);
             PlayMusic(DayMusic, true); // Запускаем дневную музыку без зацикливания
         }
     }
@@ -101,11 +107,20 @@ public class DayNightManager : MonoBehaviour
     // Воспроизведение музыки с возможностью зацикливания
     private void PlayMusic(AudioClip clip, bool loop)
     {
-        if (audioSource.isPlaying)
-            audioSource.Stop();
+        if (audioSourceMusic.isPlaying)
+            audioSourceMusic.Stop();
 
-        audioSource.clip = clip;
-        audioSource.loop = loop;
-        audioSource.Play();
+        audioSourceMusic.clip = clip;
+        audioSourceMusic.loop = loop;
+        audioSourceMusic.Play();
+    }
+    private void PlayAmbient(AudioClip clip, bool loop)
+    {
+        if (audioSourceAmbient.isPlaying)
+            audioSourceAmbient.Stop();
+
+        audioSourceAmbient.clip = clip;
+        audioSourceAmbient.loop = loop;
+        audioSourceAmbient.Play();
     }
 }

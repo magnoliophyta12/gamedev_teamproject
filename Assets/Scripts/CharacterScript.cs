@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class CharacterScript : MonoBehaviour
 {
     private Animator animator;
+    private AudioSource stepsSound;
     private InputAction moveAction;
     private InputAction jumpAction;
     private CharacterController characterController;
@@ -17,6 +18,7 @@ public class CharacterScript : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        stepsSound = GetComponent<AudioSource>();
         moveAction = InputSystem.actions.FindAction("Move");
         jumpAction = InputSystem.actions.FindAction("Jump");
         characterController = GetComponent<CharacterController>();
@@ -72,7 +74,16 @@ public class CharacterScript : MonoBehaviour
         {
             animator.SetInteger("AnimationState", (int)animationState);
             prevMoveState = animationState;
+            if (animationState == AnimationStates.RunForward || animationState == AnimationStates.RunBackward || animationState == AnimationStates.RunRight || animationState == AnimationStates.RunLeft)
+            {
+                stepsSound.Play();
+            }
+            else
+            {
+                stepsSound.Stop();
+            }
         }
+        
     }
 }
 
