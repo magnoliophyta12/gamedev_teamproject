@@ -637,6 +637,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1782702501690864755, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 1789272960074739661, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -1838,6 +1842,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1422840603}
   - component: {fileID: 1422840602}
+  - component: {fileID: 1422840604}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -1873,6 +1878,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1422840604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422840601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 056e607edd7ea5a4eabffde682c22353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placerName: Mushrooms
+  terrain: {fileID: 772518842}
+  itemPrefab: {fileID: 4970744065850005167, guid: e3c5c382cd4c92242ba9b954d2144e03, type: 3}
+  numberOfItems: 2000
+  itemHeightOffset: 0.5
+  maxSlopeAngle: 100
 --- !u!1 &1463041904
 GameObject:
   m_ObjectHideFlags: 0
@@ -1913,7 +1936,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1463041904}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1463041907
 Camera:
   m_ObjectHideFlags: 0
@@ -2649,6 +2672,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48c4335c9b485ce49a9ab4f4f6f52150, type: 3}
+--- !u!1001 &4451358462177563989
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4970744065850005167, guid: e3c5c382cd4c92242ba9b954d2144e03, type: 3}
+      propertyPath: m_Name
+      value: mushroom01_brown
+      objectReference: {fileID: 0}
+    - target: {fileID: 5300179672819671692, guid: e3c5c382cd4c92242ba9b954d2144e03, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 49.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5300179672819671692, guid: e3c5c382cd4c92242ba9b954d2144e03, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5300179672819671692, guid: e3c5c382cd4c92242ba9b954d2144e03, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 28.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5300179672819671692, guid: e3c5c382cd4c92242ba9b954d2144e03, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5300179672819671692, guid: e3c5c382cd4c92242ba9b954d2144e03, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5300179672819671692, guid: e3c5c382cd4c92242ba9b954d2144e03, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5300179672819671692, guid: e3c5c382cd4c92242ba9b954d2144e03, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5300179672819671692, guid: e3c5c382cd4c92242ba9b954d2144e03, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5300179672819671692, guid: e3c5c382cd4c92242ba9b954d2144e03, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5300179672819671692, guid: e3c5c382cd4c92242ba9b954d2144e03, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e3c5c382cd4c92242ba9b954d2144e03, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2666,3 +2746,4 @@ SceneRoots:
   - {fileID: 1756258296}
   - {fileID: 1971934470}
   - {fileID: 1797077834}
+  - {fileID: 4451358462177563989}

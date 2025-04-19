@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +15,7 @@ public class CharacterScript : MonoBehaviour
     private float jumpHeight = 1.5f;
     private float gravityValue = -9.81f;
     private AnimationStates prevMoveState = AnimationStates.Idle;
+    private bool isAttacking = false;
 
     void Start()
     {
@@ -26,6 +28,8 @@ public class CharacterScript : MonoBehaviour
 
     void Update()
     {
+        if (isAttacking) return;
+
         AnimationStates animationState = AnimationStates.Idle;
 
         groundedPlayer = characterController.isGrounded;
@@ -56,11 +60,11 @@ public class CharacterScript : MonoBehaviour
             if (Input.GetKey(KeyCode.D))
                 animationState = AnimationStates.RunRight;
             if (Input.GetKey(KeyCode.S))
-                animationState = AnimationStates.RunBackward;  
+                animationState = AnimationStates.RunBackward;
         }
         characterController.Move(moveStep);
 
-        //Makes the player jump
+        // Jump
         if (jumpAction.ReadValue<float>() > 0 && groundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
@@ -69,6 +73,13 @@ public class CharacterScript : MonoBehaviour
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         characterController.Move(playerVelocity * Time.deltaTime);
+
+        // Attack input (левая кнопка мыши)
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            StartCoroutine(PlayAttackAnimationTimed());
+            return;
+        }
 
         if (animationState != prevMoveState)
         {
@@ -83,11 +94,37 @@ public class CharacterScript : MonoBehaviour
                 stepsSound.Stop();
             }
         }
-        
+    }
+
+    public void SetAnimationState(AnimationStates newState)
+    {
+        animator.SetInteger("AnimationState", (int)newState);
+        prevMoveState = newState;
+    }
+
+    public void PlayGatheringAnimationTimed(float duration = 1.2f)
+    {
+        StartCoroutine(GatherAndReturn(duration));
+    }
+
+    private IEnumerator GatherAndReturn(float duration)
+    {
+        SetAnimationState(AnimationStates.Gather);
+        yield return new WaitForSeconds(duration);
+        SetAnimationState(AnimationStates.Idle);
+    }
+
+    public IEnumerator PlayAttackAnimationTimed(float duration = 0.8f)
+    {
+        isAttacking = true;
+        SetAnimationState(AnimationStates.MeleeAttack);
+        yield return new WaitForSeconds(duration);
+        SetAnimationState(AnimationStates.Idle);
+        isAttacking = false;
     }
 }
 
-enum AnimationStates
+public enum AnimationStates
 {
     Idle = 1,
     Jump = 2,
@@ -95,4 +132,6 @@ enum AnimationStates
     RunRight = 4,
     RunLeft = 5,
     RunBackward = 6,
+    Gather = 7,
+    MeleeAttack = 8
 }
