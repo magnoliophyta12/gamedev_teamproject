@@ -8,6 +8,7 @@ public class CharacterScript : MonoBehaviour
     private AudioSource stepsSound;
     private InputAction moveAction;
     private InputAction jumpAction;
+    private InputAction sprintAction;
     private CharacterController characterController;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
@@ -15,7 +16,7 @@ public class CharacterScript : MonoBehaviour
     private float jumpHeight = 1.5f;
     private float gravityValue = -9.81f;
     private AnimationStates prevMoveState = AnimationStates.Idle;
-    private bool isAttacking = false;
+    private bool isAttacking = false, isGathering = false;
 
     void Start()
     {
@@ -23,12 +24,13 @@ public class CharacterScript : MonoBehaviour
         stepsSound = GetComponent<AudioSource>();
         moveAction = InputSystem.actions.FindAction("Move");
         jumpAction = InputSystem.actions.FindAction("Jump");
+        sprintAction = InputSystem.actions.FindAction("Sprint");
         characterController = GetComponent<CharacterController>();
     }
 
     void Update()
     {
-        if (isAttacking) return;
+        if (isAttacking || isGathering) return; 
 
         AnimationStates animationState = AnimationStates.Idle;
 
@@ -39,6 +41,8 @@ public class CharacterScript : MonoBehaviour
         }
 
         Vector2 moveValue = moveAction.ReadValue<Vector2>();
+        float sprintValue = sprintAction.ReadValue<float>();
+
         Vector3 cameraForward = Camera.main.transform.forward;
         cameraForward.y = 0.0f;
         if (cameraForward != Vector3.zero)
@@ -46,15 +50,18 @@ public class CharacterScript : MonoBehaviour
             cameraForward.Normalize();
         }
 
-        Vector3 moveStep = playerSpeed * Time.deltaTime * (
+        Vector3 moveStep = playerSpeed * Time.deltaTime * (1.0f + sprintValue) * (
             moveValue.x * Camera.main.transform.right +
             moveValue.y * cameraForward
         );
+
         if (moveStep.magnitude > 0)
         {
             this.transform.forward = cameraForward;
             if (Input.GetKey(KeyCode.W))
-                animationState = AnimationStates.RunForward;
+                animationState = sprintValue > 0 
+                    ? AnimationStates.Sprint 
+                    : AnimationStates.RunForward;
             if (Input.GetKey(KeyCode.A))
                 animationState = AnimationStates.RunLeft;
             if (Input.GetKey(KeyCode.D))
@@ -86,7 +93,7 @@ public class CharacterScript : MonoBehaviour
         {
             animator.SetInteger("AnimationState", (int)animationState);
             prevMoveState = animationState;
-            if (animationState == AnimationStates.RunForward || animationState == AnimationStates.RunBackward || animationState == AnimationStates.RunRight || animationState == AnimationStates.RunLeft)
+            if (animationState == AnimationStates.RunForward || animationState == AnimationStates.RunBackward || animationState == AnimationStates.RunRight || animationState == AnimationStates.RunLeft || animationState == AnimationStates.Sprint)
             {
                 stepsSound.Play();
             }
@@ -110,9 +117,11 @@ public class CharacterScript : MonoBehaviour
 
     private IEnumerator GatherAndReturn(float duration)
     {
+        isGathering = true;
         SetAnimationState(AnimationStates.Gather);
         yield return new WaitForSeconds(duration);
         SetAnimationState(AnimationStates.Idle);
+        isGathering = false;
     }
 
     public IEnumerator PlayAttackAnimationTimed(float duration = 0.8f)
@@ -134,5 +143,6 @@ public enum AnimationStates
     RunLeft = 5,
     RunBackward = 6,
     Gather = 7,
-    MeleeAttack = 8
+    MeleeAttack = 8,
+    Sprint = 9
 }
