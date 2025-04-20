@@ -71,11 +71,12 @@ public class CharacterScript : MonoBehaviour
             animationState = AnimationStates.Jump;
         }
 
+
         playerVelocity.y += gravityValue * Time.deltaTime;
         characterController.Move(playerVelocity * Time.deltaTime);
 
         // Attack input (левая кнопка мыши)
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (Mouse.current.leftButton.wasPressedThisFrame && !isAttacking)
         {
             StartCoroutine(PlayAttackAnimationTimed());
             return;
