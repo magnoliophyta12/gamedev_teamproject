@@ -109,7 +109,7 @@ public class MenuQualityScript : MonoBehaviour
 
     public void OnGammaChanged(float value)
     {
-        Camera.main.GetComponent<GammaEffect>().SetGamma(gammaSlider.value);
+        //Camera.main.GetComponent   <GammaEffect>().SetGamma(gammaSlider.value);
         PlayerPrefs.SetFloat("Gamma", value);
     }
 

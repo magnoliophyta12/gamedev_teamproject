@@ -18,6 +18,8 @@ public class CharacterScript : MonoBehaviour
     private AnimationStates prevMoveState = AnimationStates.Idle;
     private bool isAttacking = false, isGathering = false;
 
+    public HealthBarScript healthBar;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -122,6 +124,7 @@ public class CharacterScript : MonoBehaviour
         yield return new WaitForSeconds(duration);
         SetAnimationState(AnimationStates.Idle);
         isGathering = false;
+        healthBar.IncreaseHealth();
     }
 
     public IEnumerator PlayAttackAnimationTimed(float duration = 0.8f)

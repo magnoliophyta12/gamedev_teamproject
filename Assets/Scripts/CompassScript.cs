@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class CompassScript : MonoBehaviour
 {
+    public RectTransform arrow; // Стрелка на компасе
     public Transform player; // Игрок
     private Transform home; // Дом (цель)
-    public RectTransform arrow; // Стрелка на компасе
-
+    
     void Start()
     {
         // Находим объект с тегом "Home"
@@ -24,14 +25,11 @@ public class CompassScript : MonoBehaviour
     {
         if (home == null || player == null || arrow == null) return;
 
-        // Вычисляем направление к дому (без учета высоты)
-        Vector3 directionToHome = home.position - player.position;
-        directionToHome.y = 0; // Игнорируем разницу по высоте
-
-        // Определяем угол между направлением игрока и направлением к дому
-        float angle = Vector3.SignedAngle(player.forward, directionToHome, Vector3.up);
-
-        // Устанавливаем поворот стрелки в UI
-        arrow.localRotation = Quaternion.Euler(0, 0, -angle);
+        Vector3 d = home.position - player.position;
+        Vector3 f = Camera.main.transform.forward;
+        d.y = 0f;
+        f.y = 0f;
+        float compasAngle = Vector3.SignedAngle(f, d, Vector3.down);
+        arrow.eulerAngles = new Vector3(0, 0, compasAngle);
     }
 }

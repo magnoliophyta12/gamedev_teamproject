@@ -46,8 +46,10 @@ public class ItemSpawnScript : MonoBehaviour
                 GameObject go = (GameObject)PrefabUtility.InstantiatePrefab(itemPrefab);
                 go.transform.position = spawnPosition;
                 go.transform.parent = parent.transform;
+
                 placed++;
             }
+
 
             attempts++;
         }

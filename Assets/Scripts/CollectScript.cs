@@ -7,7 +7,7 @@ public class CollectScript : MonoBehaviour
     public float rotationSpeed = 50f;
     [SerializeField] private AudioClip pickupSound;
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private float delayBeforeDeactivate = 1f; 
+    [SerializeField] private float delayBeforeDeactivate = 1f;
 
     private bool isPlayerNear = false;
     private GameObject currentPlayer;
