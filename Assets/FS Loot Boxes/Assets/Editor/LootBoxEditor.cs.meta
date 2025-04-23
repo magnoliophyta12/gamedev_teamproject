@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 04bd38b3d1c08424d8307d5c96f5d402
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 146757
+  packageName: Animated Cartoon Treasure Chest
+  packageVersion: 1.0
+  assetPath: Assets/FS Loot Boxes/Assets/Editor/LootBoxEditor.cs
+  uploadId: 313175

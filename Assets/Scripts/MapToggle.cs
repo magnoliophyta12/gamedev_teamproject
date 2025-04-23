@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class MapToggle : MonoBehaviour
 {
-    public GameObject mapUI; // UI с картой
+    public GameObject mapUI; 
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M)) // Если нажата M
+        if (Input.GetKeyDown(KeyCode.M)) 
         {
-            mapUI.SetActive(!mapUI.activeSelf); // Переключаем отображение
+            mapUI.SetActive(!mapUI.activeSelf); 
         }
     }
 }

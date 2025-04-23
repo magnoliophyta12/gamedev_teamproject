@@ -1,31 +1,27 @@
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 public class CompassScript : MonoBehaviour
 {
-    public RectTransform arrow; // Стрелка на компасе
-    public Transform player; // Игрок
-    private Transform home; // Дом (цель)
+    public RectTransform arrow; 
+    public Transform player; 
+    private Transform goal; 
     
     void Start()
     {
-        // Находим объект с тегом "Home"
-        GameObject homeObject = GameObject.FindGameObjectWithTag("Home");
-        if (homeObject != null)
+        GameObject goalObject = GameObject.FindGameObjectWithTag("Goal");
+        if (goalObject != null)
         {
-            home = homeObject.transform;
+            goal = goalObject.transform;
         }
         else
         {
-            Debug.LogError("Дом (Home) не найден! Убедитесь, что объект имеет тег 'Home'");
+            Debug.LogError("Сундук не найден! Убедитесь, что объект имеет тег 'Goal'");
         }
     }
 
     void Update()
     {
-        if (home == null || player == null || arrow == null) return;
-
-        Vector3 d = home.position - player.position;
+        Vector3 d = goal.position - player.position;
         Vector3 f = Camera.main.transform.forward;
         d.y = 0f;
         f.y = 0f;

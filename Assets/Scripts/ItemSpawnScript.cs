@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class ItemSpawnScript : MonoBehaviour
 {
-    public string placerName;
     public Terrain terrain;
     public GameObject itemPrefab;
     public int numberOfItems = 20;
@@ -16,16 +15,10 @@ public class ItemSpawnScript : MonoBehaviour
     }
     void PlacePositions()
     {
-        if (!itemPrefab || !terrain)
-        {
-            Debug.LogWarning("Object prefab or terrain field is not initialized");
-            return;
-        }
-
         TerrainData terrainData = terrain.terrainData;
         Vector3 terrainPos = terrain.transform.position;
 
-        GameObject parent = new GameObject(placerName);
+        GameObject parent = new GameObject();
 
         int placed = 0;
         int attempts = 0;
@@ -50,10 +43,7 @@ public class ItemSpawnScript : MonoBehaviour
                 placed++;
             }
 
-
             attempts++;
         }
-
-        Debug.Log($"Placed {placed} {placerName.ToLower()} out of {numberOfItems} requested.");
     }
 }
