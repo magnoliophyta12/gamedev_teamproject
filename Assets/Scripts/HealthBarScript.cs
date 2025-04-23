@@ -23,7 +23,7 @@ public class HealthBarScript : MonoBehaviour
         targetHealth = Mathf.Clamp(targetHealth, 0f, 1f);
 
         // Плавне наближення поточного значення до цілі
-        currentHealth = Mathf.Lerp(currentHealth, targetHealth, Time.deltaTime * 3f);
+        currentHealth = Mathf.Lerp(currentHealth, targetHealth, 3f);
         bar.fillAmount = currentHealth;
     }
 
@@ -33,9 +33,9 @@ public class HealthBarScript : MonoBehaviour
         targetHealth = Mathf.Clamp(targetHealth, 0f, 1f);
     }
 
-    public void ReduceHealth(float health)
+    public void ReduceHealth()
     {
-        currentHealth -= health;
+        currentHealth -= decAmount;
         currentHealth = Mathf.Clamp(currentHealth, 0f, 1f);
     }
 }
