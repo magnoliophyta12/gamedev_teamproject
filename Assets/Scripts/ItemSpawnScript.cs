@@ -51,13 +51,18 @@ public class ItemSpawnScript : MonoBehaviour
 
                 if (slopeAngle <= maxSlopeAngle)
                 {
-#if UNITY_EDITOR
+                    #if UNITY_EDITOR
                     GameObject go = (GameObject)UnityEditor.PrefabUtility.InstantiatePrefab(itemPrefab);
-#else
+                    #else
                     GameObject go = Instantiate(itemPrefab);
-#endif
+                    #endif
+
                     go.transform.position = spawnPosition;
                     go.transform.parent = parent.transform;
+
+                    // Применяем нужный слой (например, "MapLayer")
+                    SetLayerRecursively(go, LayerMask.NameToLayer("MapLayer"));
+
 
                     placed++;
                     batchPlaced++;
@@ -70,5 +75,17 @@ public class ItemSpawnScript : MonoBehaviour
         }
 
         Debug.Log($" Spawn complete: {placed}/{numberOfItems} items placed.");
+    }
+
+    void SetLayerRecursively(GameObject obj, int newLayer)
+    {
+        if (obj == null) return;
+
+        obj.layer = newLayer;
+
+        foreach (Transform child in obj.transform)
+        {
+            SetLayerRecursively(child.gameObject, newLayer);
+        }
     }
 }

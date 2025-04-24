@@ -46,6 +46,7 @@ public class GoalSpawner : MonoBehaviour
                 lastSpawnPos = spawnPos; 
 
                 currentChest = Instantiate(chestPrefab, spawnPos, Quaternion.identity);
+                SetLayerRecursively(currentChest, LayerMask.NameToLayer("MapLayer"));
                 chestSpawned = true;
 
                 Debug.Log($"[GoalSpawner] Spawned chest at world position: {spawnPos}");
@@ -75,6 +76,18 @@ public class GoalSpawner : MonoBehaviour
             {
                 Debug.LogWarning("[GoalSpawner] Chest not spawned or Player not found.");
             }
+        }
+    }
+
+    void SetLayerRecursively(GameObject obj, int newLayer)
+    {
+        if (obj == null) return;
+
+        obj.layer = newLayer;
+
+        foreach (Transform child in obj.transform)
+        {
+            SetLayerRecursively(child.gameObject, newLayer);
         }
     }
 }
