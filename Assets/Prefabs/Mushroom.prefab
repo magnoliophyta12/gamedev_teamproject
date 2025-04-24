@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3107798397492978956}
   - component: {fileID: 8181825421599578637}
   m_Layer: 0
-  m_Name: mushroom01_brown
+  m_Name: Mushroom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   rotationSpeed: 50
   pickupSound: {fileID: 8300000, guid: 563b84ff165653f4d8ff051758654bb9, type: 3}
   audioSource: {fileID: 8181825421599578637}
-  fadeDuration: 1
+  delayBeforeDeactivate: 1
 --- !u!82 &8181825421599578637
 AudioSource:
   m_ObjectHideFlags: 0
