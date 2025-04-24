@@ -1284,12 +1284,24 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1035639376}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 0.01
   m_WholeNumbers: 0
-  m_Value: 0.191
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 736876538}
+        m_TargetAssemblyTypeName: MenuDifficultyScript, Assembly-CSharp
+        m_MethodName: OnIncSliderChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &226006391
 GameObject:
   m_ObjectHideFlags: 0
@@ -3271,7 +3283,7 @@ GameObject:
   - component: {fileID: 434403278}
   - component: {fileID: 434403279}
   m_Layer: 5
-  m_Name: Layout2
+  m_Name: Layout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4776,7 +4788,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 570462922}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e628a22872a34f745ba006ae7caf0258, type: 3}
   m_Name: 
@@ -5488,16 +5500,16 @@ MonoBehaviour:
   m_FillRect: {fileID: 2095257193}
   m_HandleRect: {fileID: 733183817}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: 1
+  m_MaxValue: 10
   m_WholeNumbers: 0
-  m_Value: 0.191
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 736876538}
         m_TargetAssemblyTypeName: MenuDifficultyScript, Assembly-CSharp
-        m_MethodName: OnCoinRangeSliderChanged
+        m_MethodName: OnSpeedSliderChanged
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5672,6 +5684,7 @@ GameObject:
   - component: {fileID: 736876535}
   - component: {fileID: 736876536}
   - component: {fileID: 736876537}
+  - component: {fileID: 736876538}
   m_Layer: 5
   m_Name: MenuCanvas
   m_TagString: Untagged
@@ -5799,6 +5812,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb565ce7cd42de459f7af2a2e745d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &736876538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736876525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f63abb73ea0898649ab18fa57874fb1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCharacter: {fileID: 0}
+  healthBarScript: {fileID: 0}
 --- !u!1 &748169730
 GameObject:
   m_ObjectHideFlags: 0
@@ -9257,15 +9284,15 @@ MonoBehaviour:
   m_HandleRect: {fileID: 913201920}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 0.1
   m_WholeNumbers: 0
-  m_Value: 0.191
+  m_Value: 0.01
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 736876538}
         m_TargetAssemblyTypeName: MenuDifficultyScript, Assembly-CSharp
-        m_MethodName: OnRadarSliderChanged
+        m_MethodName: OnDecSliderChanged
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15122,6 +15149,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1975993264}
   m_CullTransparentMesh: 1
+--- !u!1 &2022333137
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2022333139}
+  - component: {fileID: 2022333138}
+  m_Layer: 0
+  m_Name: MenuManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2022333138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022333137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e628a22872a34f745ba006ae7caf0258, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2022333139
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022333137}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 47.131313, y: 1055.507, z: -0.04876709}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2029585135
 GameObject:
   m_ObjectHideFlags: 0
@@ -16306,3 +16377,4 @@ SceneRoots:
   - {fileID: 1192237367}
   - {fileID: 736876531}
   - {fileID: 1743810860}
+  - {fileID: 2022333139}

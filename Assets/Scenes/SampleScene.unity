@@ -261,6 +261,7 @@ MonoBehaviour:
   DayAmbient: {fileID: 8300000, guid: 36bdae42fc9de6b4e8ba24cf775603cd, type: 3}
   NightAmbient: {fileID: 8300000, guid: 1cbec46af850c754092dcd5bf8bbfb67, type: 3}
   goalSpawner: {fileID: 0}
+  lostText: {fileID: 0}
 --- !u!4 &124463625
 Transform:
   m_ObjectHideFlags: 0
@@ -1256,6 +1257,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1782702501690864755, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
       insertIndex: -1
       addedObject: {fileID: 493935219}
+    - targetCorrespondingSourceObject: {fileID: 1782702501690864755, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 493935223}
   m_SourcePrefab: {fileID: 100100000, guid: 60770bdb4dc667c45bea53db0339dc05, type: 3}
 --- !u!4 &493935213 stripped
 Transform:
@@ -1288,7 +1292,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 1.4731007
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -1380,6 +1384,29 @@ MonoBehaviour:
   interactKey: 101
   dayNightManager: {fileID: 124463624}
   hintText: {fileID: 2113965556}
+--- !u!136 &493935223
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493935214}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.0695834
+  m_Height: 2.6342711
+  m_Direction: 1
+  m_Center: {x: 0.37891865, y: 0.8171356, z: -0.19066477}
 --- !u!1 &526648825
 GameObject:
   m_ObjectHideFlags: 0
@@ -1838,7 +1865,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28.35
+  m_fontSize: 39.9
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1936,7 +1963,7 @@ MonoBehaviour:
   chestPrefab: {fileID: 3471643304241853864, guid: feb46b78f78e74267836b445901cf537, type: 3}
   terrain: {fileID: 772518842}
   itemHeightOffset: 0.5
-  maxSlopeAngle: 0
+  maxSlopeAngle: 100
 --- !u!4 &805568560
 Transform:
   m_ObjectHideFlags: 0
@@ -1964,7 +1991,7 @@ GameObject:
   - component: {fileID: 885400426}
   m_Layer: 5
   m_Name: HealthBar
-  m_TagString: Untagged
+  m_TagString: HealthBar
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2453,9 +2480,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   terrain: {fileID: 772518842}
   itemPrefab: {fileID: 4970744065850005167, guid: e3c5c382cd4c92242ba9b954d2144e03, type: 3}
-  numberOfItems: 2000
-  itemHeightOffset: 0.5
+  numberOfItems: 1000
+  itemHeightOffset: 0
   maxSlopeAngle: 100
+  itemsPerBatch: 10
+  pauseBetweenBatches: 0.25
 --- !u!114 &1422840605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2463,17 +2492,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1422840601}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 056e607edd7ea5a4eabffde682c22353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placerName: Goblins
   terrain: {fileID: 772518842}
   itemPrefab: {fileID: 2288107601795831811, guid: e9eb08f4d65334542ab16b27b5ced5fa, type: 3}
-  numberOfItems: 100
-  itemHeightOffset: 0.5
+  numberOfItems: 50
+  itemHeightOffset: 0
   maxSlopeAngle: 100
+  itemsPerBatch: 10
+  pauseBetweenBatches: 0.25
 --- !u!1 &1463041904
 GameObject:
   m_ObjectHideFlags: 0
@@ -3607,6 +3637,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goblin
       objectReference: {fileID: 0}
+    - target: {fileID: 2288107601795831811, guid: e9eb08f4d65334542ab16b27b5ced5fa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3884325058579869538, guid: e9eb08f4d65334542ab16b27b5ced5fa, type: 3}
       propertyPath: healthbar
       value: 
@@ -3636,3 +3670,5 @@ SceneRoots:
   - {fileID: 1797077834}
   - {fileID: 4451358462177563989}
   - {fileID: 6994340945197478650}
+  - {fileID: 149921699}
+  - {fileID: 805568560}
