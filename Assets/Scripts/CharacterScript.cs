@@ -10,6 +10,8 @@ public class CharacterScript : MonoBehaviour
     private InputAction jumpAction;
     private InputAction sprintAction;
     private CharacterController characterController;
+    public HealthBarScript healthBar;
+
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private float playerSpeed = 4.0f;
@@ -18,7 +20,7 @@ public class CharacterScript : MonoBehaviour
     private AnimationStates prevMoveState = AnimationStates.Idle;
     private bool isAttacking = false, isGathering = false;
 
-    public HealthBarScript healthBar;
+    public float attackRange = 1.5f;
 
     void Start()
     {
@@ -135,7 +137,23 @@ public class CharacterScript : MonoBehaviour
     {
         isAttacking = true;
         SetAnimationState(AnimationStates.MeleeAttack);
-        yield return new WaitForSeconds(duration);
+
+        yield return new WaitForSeconds(duration - 0.6f);
+
+        Collider[] hits = Physics.OverlapSphere(transform.position, attackRange);
+        foreach (var hit in hits)
+        {
+            if (hit.CompareTag("Enemy"))
+            {
+                GoblinScript goblin = hit.GetComponent<GoblinScript>();
+                if (goblin != null)
+                {
+                    goblin.TakeDamage(1);
+                }
+            }
+        }
+
+        //yield return new WaitForSeconds(duration - 0.4f);
         SetAnimationState(AnimationStates.Idle);
         isAttacking = false;
     }

@@ -7,6 +7,7 @@ TagManager:
   - Home
   - Goal
   - HealthBar
+  - Enemy
   layers:
   - Default
   - TransparentFX

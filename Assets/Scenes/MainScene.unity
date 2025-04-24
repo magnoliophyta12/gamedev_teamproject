@@ -1938,7 +1938,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26.15
+  m_fontSize: 25.35
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2625,7 +2625,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1747609093
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4182,7 +4182,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1480326454470836921, guid: e9eb08f4d65334542ab16b27b5ced5fa, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 25.71
+      value: 44.51
       objectReference: {fileID: 0}
     - target: {fileID: 1480326454470836921, guid: e9eb08f4d65334542ab16b27b5ced5fa, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4546,7 +4546,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2288107601795831811, guid: e9eb08f4d65334542ab16b27b5ced5fa, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2288107601795831811, guid: e9eb08f4d65334542ab16b27b5ced5fa, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 2289738342401324287, guid: e9eb08f4d65334542ab16b27b5ced5fa, type: 3}
       propertyPath: m_Layer
@@ -5203,6 +5207,14 @@ PrefabInstance:
     - target: {fileID: 3763559604195211590, guid: e9eb08f4d65334542ab16b27b5ced5fa, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772488286944992518, guid: e9eb08f4d65334542ab16b27b5ced5fa, type: 3}
+      propertyPath: m_Radius
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3772488286944992518, guid: e9eb08f4d65334542ab16b27b5ced5fa, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3795575623857077766, guid: e9eb08f4d65334542ab16b27b5ced5fa, type: 3}
       propertyPath: m_Layer

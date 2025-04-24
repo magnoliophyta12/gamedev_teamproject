@@ -11,16 +11,22 @@ public class GoblinScript : MonoBehaviour
     public float patrolRadius = 10f;
     public float idleTime = 2f;
 
+    public float attackCooldown = 4f;
+    private float lastAttackTime = 0f;
+
+    public int maxHealth = 2;
+    private int currentHealth;
+    private bool isDead = false;
+
     private NavMeshAgent agent;
     private Animator animator;
     private Transform player;
     private float idleTimer;
     private Vector3 patrolTarget;
 
-    private HealthBarScript healthbar;
-    public float attackCooldown = 4f;
-    private float lastAttackTime = 0f;
+    private HealthBarScript playerHealthbar;
 
+    
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -31,11 +37,14 @@ public class GoblinScript : MonoBehaviour
 
         TransitionToState(GoblinStates.Idle);
 
-        healthbar = GameObject.Find("HealthBar").GetComponent<HealthBarScript>();
+        playerHealthbar = GameObject.Find("HealthBar").GetComponent<HealthBarScript>();
+        currentHealth = maxHealth;
     }
 
     void Update()
     {
+        if (isDead) return;
+
         switch (currentState)
         {
             case GoblinStates.Idle: HandleIdle(); break;
@@ -122,7 +131,6 @@ public class GoblinScript : MonoBehaviour
         float distance = Vector3.Distance(transform.position, player.position);
         if (distance > attackRange)
         {
-            Debug.Log("Недостатня відстань для удару");
             TransitionToState(GoblinStates.Chase);
             return;
         }
@@ -135,17 +143,30 @@ public class GoblinScript : MonoBehaviour
 
     public void DealDamage()
     {
-        Debug.Log("Удар!");
-        healthbar.ReduceHealth();
+        playerHealthbar.ReduceHealth();
     }
 
-    public void Die()
+    public void TakeDamage(int amount)
     {
-        agent.enabled = false;
-        TransitionToState(GoblinStates.Dead);
-        GetComponent<Collider>().enabled = false;
-        Destroy(gameObject, 5f); // щоб не валялись вічно
+        currentHealth -= amount;
+        Debug.Log("Goblin HP: " + currentHealth);
+
+        if (currentHealth <= 0)
+        {
+            isDead = true;
+            TransitionToState(GoblinStates.Dead);
+        }
     }
+
+    //void HandleDie()
+    //{
+    //    if (isDead) return;
+    //    Debug.Log("Goblin died!");
+    //    //isDead = true;
+    //    agent.enabled = false;
+    //    GetComponent<Collider>().enabled = false;
+    //    Destroy(gameObject, 1.5f); // щоб не валялись вічно
+    //}
 
     bool PlayerInVision()
     {
@@ -168,18 +189,25 @@ public class GoblinScript : MonoBehaviour
 
     void TransitionToState(GoblinStates newState)
     {
+        if (isDead && newState != GoblinStates.Dead) return;
         currentState = newState;
 
-        if (newState == GoblinStates.Attack)
+        switch (newState)
         {
-            animator.SetTrigger("triggerAttack");
-        }
-        else if (newState == GoblinStates.Dead) {
-            animator.SetTrigger("triggerDeath");
-        }
-        else
-        {
-            animator.SetBool("isWalking", newState == GoblinStates.Walk || newState == GoblinStates.Chase);
+            case GoblinStates.Attack:
+                animator.SetTrigger("triggerAttack");
+                break;
+            case GoblinStates.Dead:
+                //isDead = true;
+                animator.SetTrigger("triggerDeath");
+                //agent.ResetPath();
+                agent.enabled = false;
+                GetComponent<Collider>().enabled = false;
+                Destroy(gameObject, 1.2f);
+                break;
+            default:
+                animator.SetBool("isWalking", newState == GoblinStates.Walk || newState == GoblinStates.Chase);
+                break;
         }
     }
 }
