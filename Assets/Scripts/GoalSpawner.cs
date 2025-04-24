@@ -9,6 +9,8 @@ public class GoalSpawner : MonoBehaviour
     private GameObject currentChest;
     private bool chestSpawned = false;
 
+    private Vector3 lastSpawnPos; 
+
     public void SpawnChest()
     {
         if (chestSpawned)
@@ -41,6 +43,8 @@ public class GoalSpawner : MonoBehaviour
             if (slopeAngle <= maxSlopeAngle)
             {
                 Vector3 spawnPos = new Vector3(randX, y + itemHeightOffset, randZ) + terrainPos;
+                lastSpawnPos = spawnPos; 
+
                 currentChest = Instantiate(chestPrefab, spawnPos, Quaternion.identity);
                 chestSpawned = true;
 
@@ -55,5 +59,22 @@ public class GoalSpawner : MonoBehaviour
     public void ResetChestSpawn()
     {
         chestSpawned = false;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null && chestSpawned)
+            {
+                player.transform.position = lastSpawnPos;
+                Debug.Log("[GoalSpawner] Teleported player to chest position.");
+            }
+            else
+            {
+                Debug.LogWarning("[GoalSpawner] Chest not spawned or Player not found.");
+            }
+        }
     }
 }
