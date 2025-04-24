@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,6 +17,10 @@ public class GoblinScript : MonoBehaviour
     private float idleTimer;
     private Vector3 patrolTarget;
 
+    private HealthBarScript healthbar;
+    public float attackCooldown = 4f;
+    private float lastAttackTime = 0f;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -25,6 +30,8 @@ public class GoblinScript : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
         TransitionToState(GoblinStates.Idle);
+
+        healthbar = GameObject.Find("HealthBar").GetComponent<HealthBarScript>();
     }
 
     void Update()
@@ -36,6 +43,11 @@ public class GoblinScript : MonoBehaviour
             case GoblinStates.Chase: HandleChase(); break;
             case GoblinStates.Attack: HandleAttack(); break;
             case GoblinStates.Dead: break;
+        }
+
+        if (agent.velocity.sqrMagnitude > 0.1f)
+        {
+            transform.rotation = Quaternion.LookRotation(-agent.velocity.normalized);
         }
     }
 
@@ -55,18 +67,19 @@ public class GoblinScript : MonoBehaviour
 
     void HandleWalk()
     {
-        if (agent.remainingDistance < 0.5f)
+        if (!agent.hasPath || agent.remainingDistance <= agent.stoppingDistance)
         {
+            agent.ResetPath(); // Скидаємо шлях
+            animator.SetBool("isWalking", false);
             TransitionToState(GoblinStates.Idle);
-        }
-
-        if (agent.velocity.sqrMagnitude > 0.1f)
-        {
-            transform.rotation = Quaternion.LookRotation(-agent.velocity.normalized);
+            return;
         }
 
         if (PlayerInVision())
+        {
+            agent.ResetPath(); // Зупиняємо патрулювання перед погонею
             TransitionToState(GoblinStates.Chase);
+        }
     }
 
     void ChoosePatrolPoint()
@@ -78,46 +91,52 @@ public class GoblinScript : MonoBehaviour
         {
             patrolTarget = hit.position;
             agent.SetDestination(patrolTarget);
+            return;
         }
+        TransitionToState(GoblinStates.Idle);
     }
 
     void HandleChase()
     {
         if (player == null) return;
 
-        agent.SetDestination(player.position);
-
-        if (agent.velocity.sqrMagnitude > 0.1f)
-        {
-            transform.rotation = Quaternion.LookRotation(-agent.velocity.normalized);
-        }
-
         float distance = Vector3.Distance(transform.position, player.position);
 
         if (distance <= attackRange)
         {
             TransitionToState(GoblinStates.Attack);
+            return;
         }
-        else if (distance > visionRange * 1.5f)
+        if (distance > visionRange * 1.5f)
         {
             TransitionToState(GoblinStates.Idle);
+            return;
         }
+        agent.SetDestination(player.position);
     }
 
     void HandleAttack()
     {
         agent.SetDestination(transform.position); // зупинити
 
-        if (agent.velocity.sqrMagnitude > 0.1f)
-        {
-            transform.rotation = Quaternion.LookRotation(-agent.velocity.normalized);
-        }
-
         float distance = Vector3.Distance(transform.position, player.position);
         if (distance > attackRange)
         {
+            Debug.Log("Недостатня відстань для удару");
             TransitionToState(GoblinStates.Chase);
+            return;
         }
+        if (Time.time >= lastAttackTime + attackCooldown)
+        {
+            lastAttackTime = Time.time;
+            animator.SetTrigger("triggerAttack");
+        }
+    }
+
+    public void DealDamage()
+    {
+        Debug.Log("Удар!");
+        healthbar.ReduceHealth();
     }
 
     public void Die()
@@ -135,8 +154,6 @@ public class GoblinScript : MonoBehaviour
         float distance = Vector3.Distance(transform.position, player.position);
         if (distance > visionRange) return false;
 
-        if (agent.velocity.sqrMagnitude <= 0.01f) return false; // якщо не рухається — нікого не бачить
-
         Vector3 lookDirection = -agent.velocity.normalized; // куди "дивиться"
         Vector3 dirToPlayer = (player.position - transform.position).normalized;
         float angle = Vector3.Angle(lookDirection, dirToPlayer);
@@ -153,11 +170,17 @@ public class GoblinScript : MonoBehaviour
     {
         currentState = newState;
 
-        // Зміна анімацій відповідно до стану
-        animator.SetBool("isWalking", newState == GoblinStates.Walk || newState == GoblinStates.Chase);
-        if (newState == GoblinStates.Idle) animator.Play("01_Idle");
-        if (newState == GoblinStates.Attack) animator.SetTrigger("triggerAttack"); ;
-        if (newState == GoblinStates.Dead) animator.SetTrigger("triggerDeath"); ;
+        if (newState == GoblinStates.Attack)
+        {
+            animator.SetTrigger("triggerAttack");
+        }
+        else if (newState == GoblinStates.Dead) {
+            animator.SetTrigger("triggerDeath");
+        }
+        else
+        {
+            animator.SetBool("isWalking", newState == GoblinStates.Walk || newState == GoblinStates.Chase);
+        }
     }
 }
 

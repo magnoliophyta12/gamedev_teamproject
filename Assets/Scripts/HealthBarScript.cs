@@ -8,7 +8,7 @@ public class HealthBarScript : MonoBehaviour
     private float targetHealth;
 
     private float incAmount = 0.3f;
-    private float decAmount = 0.3f;
+    private float decAmount = 0.15f;
 
     float healthDecreaseRate = 0.01f;
 
@@ -32,13 +32,11 @@ public class HealthBarScript : MonoBehaviour
     public void IncreaseHealth()
     {
         targetHealth += incAmount;
-        //targetHealth = Mathf.Clamp(targetHealth, 0f, 1f);
     }
 
     public void ReduceHealth()
     {
-        currentHealth -= decAmount;
-        currentHealth = Mathf.Clamp(currentHealth, 0f, 1f);
+        targetHealth -= decAmount;
     }
     public void SetIncAmount(float value)
     {
