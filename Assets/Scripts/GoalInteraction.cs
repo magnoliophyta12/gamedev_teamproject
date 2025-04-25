@@ -1,15 +1,20 @@
 using UnityEngine;
 using TMPro;
+using static Unity.Collections.Unicode;
 
 public class GoalInteraction : MonoBehaviour
 {
     public float interactionDistance = 3f;
-    public KeyCode interactKey = KeyCode.E;
     public DayNightManager dayNightManager;
     public TextMeshProUGUI hintText;
 
-    private GameObject currentGoal;
+    private KeyCode interactKey;
 
+    private GameObject currentGoal;
+    void Start()
+    {
+        interactKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Key_PickUp", "E"));
+    }
     private void Update()
     {
         currentGoal = FindClosestGoal();
@@ -57,5 +62,9 @@ public class GoalInteraction : MonoBehaviour
                 return goal;
         }
         return null;
+    }
+    public void ReloadKeys()
+    {
+        interactKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Key_PickUp", "E"));
     }
 }

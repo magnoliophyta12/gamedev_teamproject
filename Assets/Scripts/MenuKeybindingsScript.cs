@@ -91,6 +91,7 @@ public class MenuKeybindingsScript : MonoBehaviour
         PlayerPrefs.Save();
 
         FindAnyObjectByType<CharacterScript>()?.ReloadKeys();
+        FindAnyObjectByType<GoalInteraction>()?.ReloadKeys();
 
         Debug.Log($"Призначено {action}: {key}");
 

@@ -9,14 +9,20 @@ public class CollectScript : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private float delayBeforeDeactivate = 1f;
 
+    private KeyCode interactKey;
+
     private bool isPlayerNear = false;
     private GameObject currentPlayer;
+     void Start()
+     {
+        interactKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Key_PickUp", "E"));
+     }
 
     void Update()
     {
         transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
 
-        if (isPlayerNear && Input.GetKeyDown(KeyCode.E) && !MenuKeybindingsScript.IsMenuOpen)
+        if (isPlayerNear && Input.GetKeyDown(interactKey) && !MenuKeybindingsScript.IsMenuOpen)
         {
             PlayPickupSound();
 
@@ -63,5 +69,9 @@ public class CollectScript : MonoBehaviour
             isPlayerNear = false;
             currentPlayer = null;
         }
+    }
+    public void ReloadKeys()
+    {
+        interactKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Key_PickUp", "E"));
     }
 }
