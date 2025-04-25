@@ -43,7 +43,7 @@ public class CharacterScript : MonoBehaviour
 
     void Update()
     {
-        if (isAttacking || isGathering && !MenuKeybindingsScript.IsMenuOpen) return; 
+        if (isAttacking || isGathering) return; 
 
         AnimationStates animationState = AnimationStates.Idle;
 

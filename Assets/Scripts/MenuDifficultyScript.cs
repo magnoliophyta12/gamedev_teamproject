@@ -82,7 +82,19 @@ public class MenuDifficultyScript : MonoBehaviour
     }
      private void LoadValue(Slider slider, string key, System.Action<float> setter)
     {
-        float value = PlayerPrefs.GetFloat(key, 0.3f);
+        float value=0;
+        if (key == "Health_DecAmount")
+        {
+            value = PlayerPrefs.GetFloat(key, 0.01f);
+        }
+        else if(key == "Health_IncAmount")
+        {
+            value = PlayerPrefs.GetFloat(key, 0.3f);
+        }
+        else if (key == "PlayerSpeed")
+        {
+            value = PlayerPrefs.GetFloat(key, 4.0f);
+        }
         slider.value = value;
         setter(value);
     }
