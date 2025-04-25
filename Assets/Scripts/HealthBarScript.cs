@@ -28,8 +28,8 @@ public class HealthBarScript : MonoBehaviour
 
         currentHealth = Mathf.Lerp(currentHealth, targetHealth, 3f);
         bar.fillAmount = currentHealth;
-
-        if (!gameOverTriggered && currentHealth <= 0.01f)
+        Debug.Log(currentHealth);
+        if (!gameOverTriggered && currentHealth <= 0.1f)
         {
             gameOverTriggered = true;
             TriggerGameOver();
