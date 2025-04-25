@@ -23,6 +23,12 @@ public class GoalInteraction : MonoBehaviour
 
         if (Input.GetKeyDown(interactKey) && currentGoal != null)
         {
+            GameOverCanvasScript gameOverUI = FindAnyObjectByType<GameOverCanvasScript>();
+            if (gameOverUI != null)
+            {
+                gameOverUI.Show("You Won!");
+            }
+            /*
             Debug.Log("[GoalInteraction] Взаимодействие с целью. Новый день - новая цель!");
 
             if (dayNightManager != null && dayNightManager.goalSpawner != null)
@@ -38,7 +44,7 @@ public class GoalInteraction : MonoBehaviour
 
                 dayNightManager.PlayAmbient(dayNightManager.DayAmbient, true);
                 dayNightManager.PlayMusic(dayNightManager.DayMusic, true);
-            }
+            }*/
         }
     }
 

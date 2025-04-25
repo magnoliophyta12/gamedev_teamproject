@@ -19,14 +19,30 @@ public class HealthBarScript : MonoBehaviour
         bar.fillAmount = currentHealth;
     }
 
+    private bool gameOverTriggered = false; // щоб не викликати кілька разів
+
     void Update()
     {
-        targetHealth -= Time.deltaTime * healthDecreaseRate;           // повільно змінюємо ціль
+        targetHealth -= Time.deltaTime * healthDecreaseRate;
         targetHealth = Mathf.Clamp(targetHealth, 0f, 1f);
 
-        // Плавне наближення поточного значення до цілі
         currentHealth = Mathf.Lerp(currentHealth, targetHealth, 3f);
         bar.fillAmount = currentHealth;
+
+        if (!gameOverTriggered && currentHealth <= 0.01f)
+        {
+            gameOverTriggered = true;
+            TriggerGameOver();
+        }
+    }
+
+    private void TriggerGameOver()
+    {
+        GameOverCanvasScript gameOverUI = FindAnyObjectByType<GameOverCanvasScript>();
+        if (gameOverUI != null)
+        {
+            gameOverUI.Show("You Lost");
+        }
     }
 
     public void IncreaseHealth()
