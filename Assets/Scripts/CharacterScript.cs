@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static Unity.Collections.Unicode;
 
 public class CharacterScript : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class CharacterScript : MonoBehaviour
     private InputAction sprintAction;
     private CharacterController characterController;
     public HealthBarScript healthBar;
+
+    private KeyCode runKey;
+    private KeyCode jumpKey;
+    private KeyCode attackKey;
 
     private Vector3 playerVelocity;
     private bool groundedPlayer;
@@ -30,11 +35,15 @@ public class CharacterScript : MonoBehaviour
         jumpAction = InputSystem.actions.FindAction("Jump");
         sprintAction = InputSystem.actions.FindAction("Sprint");
         characterController = GetComponent<CharacterController>();
+
+        runKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Key_Run", "LeftShift"));
+        jumpKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Key_Jump", "Space"));
+        attackKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Key_Attack", "Mouse0"));
     }
 
     void Update()
     {
-        if (isAttacking || isGathering) return; 
+        if (isAttacking || isGathering && !MenuKeybindingsScript.IsMenuOpen) return; 
 
         AnimationStates animationState = AnimationStates.Idle;
 
@@ -45,7 +54,7 @@ public class CharacterScript : MonoBehaviour
         }
 
         Vector2 moveValue = moveAction.ReadValue<Vector2>();
-        float sprintValue = sprintAction.ReadValue<float>();
+        float sprintValue = Input.GetKey(runKey) ? 1.0f : 0.0f;
 
         Vector3 cameraForward = Camera.main.transform.forward;
         cameraForward.y = 0.0f;
@@ -76,7 +85,7 @@ public class CharacterScript : MonoBehaviour
         characterController.Move(moveStep);
 
         // Jump
-        if (jumpAction.ReadValue<float>() > 0 && groundedPlayer)
+        if (Input.GetKeyDown(jumpKey) && groundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
             animationState = AnimationStates.Jump;
@@ -87,7 +96,7 @@ public class CharacterScript : MonoBehaviour
         characterController.Move(playerVelocity * Time.deltaTime);
 
         // Attack input (левая кнопка мыши)
-        if (Mouse.current.leftButton.wasPressedThisFrame && !isAttacking)
+        if (Input.GetKeyDown(attackKey) && !isAttacking && !MenuKeybindingsScript.IsMenuOpen)
         {
             StartCoroutine(PlayAttackAnimationTimed());
             return;
@@ -156,6 +165,12 @@ public class CharacterScript : MonoBehaviour
         //yield return new WaitForSeconds(duration - 0.4f);
         SetAnimationState(AnimationStates.Idle);
         isAttacking = false;
+    }
+    public void ReloadKeys()
+    {
+        runKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Key_Run", "LeftShift"));
+        jumpKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Key_Jump", "Space"));
+        attackKey = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Key_Attack", "Mouse0"));
     }
 }
 

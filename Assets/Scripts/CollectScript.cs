@@ -16,7 +16,7 @@ public class CollectScript : MonoBehaviour
     {
         transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
 
-        if (isPlayerNear && Keyboard.current.eKey.wasPressedThisFrame)
+        if (isPlayerNear && Input.GetKeyDown(KeyCode.E) && !MenuKeybindingsScript.IsMenuOpen)
         {
             PlayPickupSound();
 

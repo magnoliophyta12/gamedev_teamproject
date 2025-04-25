@@ -17,6 +17,7 @@ public class MenuScript : MonoBehaviour
             GameObject.Destroy(this.gameObject);
         }
         Time.timeScale = gameObject.activeInHierarchy ? 0.0f : 1.0f;
+
     }
 
 
@@ -26,6 +27,7 @@ public class MenuScript : MonoBehaviour
         {
             Time.timeScale = 1 - Time.timeScale;
             content.SetActive(!content.activeInHierarchy);
+            MenuKeybindingsScript.SetMenuState(content.activeInHierarchy);
         }
         if (Input.GetKeyUp(KeyCode.Alpha1))
         {

@@ -21,7 +21,7 @@ public class MenuExitScript : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "SampleScene")
+        if (scene.name == "MainScene")
         {
 
             playerCharacter = GameObject.FindGameObjectWithTag("Player")?.GetComponent<CharacterScript>();

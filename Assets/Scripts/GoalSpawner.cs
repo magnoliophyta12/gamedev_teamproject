@@ -64,7 +64,7 @@ public class GoalSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.T) && !MenuKeybindingsScript.IsMenuOpen)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player != null && chestSpawned)

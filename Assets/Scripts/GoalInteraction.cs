@@ -18,7 +18,7 @@ public class GoalInteraction : MonoBehaviour
         {
             hintText.gameObject.SetActive(currentGoal != null);
             if (currentGoal != null)
-                hintText.text = "Press E";
+                hintText.text = "Press "+ interactKey.ToString();
         }
 
         if (Input.GetKeyDown(interactKey) && currentGoal != null)
