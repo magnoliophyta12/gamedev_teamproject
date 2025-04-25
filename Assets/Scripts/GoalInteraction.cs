@@ -26,7 +26,7 @@ public class GoalInteraction : MonoBehaviour
                 hintText.text = "Press "+ interactKey.ToString();
         }
 
-        if (Input.GetKeyDown(interactKey) && currentGoal != null)
+        if (Input.GetKeyDown(interactKey) && currentGoal != null && !MenuKeybindingsScript.IsMenuOpen)
         {
             GameOverCanvasScript gameOverUI = FindAnyObjectByType<GameOverCanvasScript>();
             if (gameOverUI != null)

@@ -1869,7 +1869,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionDistance: 3
-  interactKey: 101
   dayNightManager: {fileID: 124463624}
   hintText: {fileID: 2113965556}
 --- !u!136 &493935223
@@ -3372,7 +3371,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1747609093
 RectTransform:
   m_ObjectHideFlags: 0
